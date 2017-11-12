@@ -101,7 +101,7 @@ public class NettyHttpServer
 
                     })
                     .option(ChannelOption.SO_BACKLOG, 128);
-            channel = bootstrap.bind(8088).sync();
+            channel = bootstrap.bind(8080).sync();
         }
         catch (final InterruptedException e) {
         	
