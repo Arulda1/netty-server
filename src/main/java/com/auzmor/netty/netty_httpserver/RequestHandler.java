@@ -30,7 +30,6 @@ public class RequestHandler {
             if(url.equals("/data/save")){
             	
             	Map<String, String> reqParmGetrFrmUri = reqParmGetrFrmUri(uri);
-            	System.out.println("b4 kafka queue");
             	if(reqParmGetrFrmUri!=null && reqParmGetrFrmUri.size()>0){
             		KafkaQueueHandler.pushMsgToKafka(reqParmGetrFrmUri);
             	}else{
@@ -42,7 +41,6 @@ public class RequestHandler {
             }if(url.equals("/data/get")){
             	
             	Map<String, String> reqParmGetrFrmUri = reqParmGetrFrmUri(uri);
-            	System.out.println("b4 kafka queue");
             	if(reqParmGetrFrmUri!=null && reqParmGetrFrmUri.size()>0){
             		KafkaQueueHandler.getMsgFrmKafka(reqParmGetrFrmUri);
             	}else{

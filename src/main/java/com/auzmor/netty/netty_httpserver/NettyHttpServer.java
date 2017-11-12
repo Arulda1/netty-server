@@ -64,9 +64,7 @@ public class NettyHttpServer
                                     {
                                         final FullHttpRequest request = (FullHttpRequest) msg;
                                         
-                                        System.out.println("request entered");
                                         FullHttpResponse response = RequestHandler.response(ctx, msg);
-                                        System.out.println("response enterededed");
                                         if (HttpUtil.isKeepAlive(request))
                                         {
                                             response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
