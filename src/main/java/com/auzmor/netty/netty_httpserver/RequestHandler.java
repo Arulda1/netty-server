@@ -10,6 +10,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 
@@ -29,7 +30,7 @@ public class RequestHandler {
             if(url.equals("/data/save")){
             	
             	Map<String, String> reqParmGetrFrmUri = reqParmGetrFrmUri(uri);
-            	
+            	System.out.println("b4 kafka queue");
             	if(reqParmGetrFrmUri!=null && reqParmGetrFrmUri.size()>0){
             		KafkaQueueHandler.pushMsgToKafka(reqParmGetrFrmUri);
             	}else{
@@ -38,16 +39,34 @@ public class RequestHandler {
             	}
             	
             	
-            }else{
+            }if(url.equals("/data/get")){
+            	
+            	Map<String, String> reqParmGetrFrmUri = reqParmGetrFrmUri(uri);
+            	System.out.println("b4 kafka queue");
+            	if(reqParmGetrFrmUri!=null && reqParmGetrFrmUri.size()>0){
+            		KafkaQueueHandler.getMsgFrmKafka(reqParmGetrFrmUri);
+            	}else{
+            		htt=HttpResponseStatus.BAD_REQUEST;
+            		responseMessage="No data to store!";
+            	}
+            	
+            	
+            }
+            else{
             	htt=HttpResponseStatus.NOT_FOUND;
             	responseMessage="URL not found";
             }
             
-            return new DefaultFullHttpResponse(
+            DefaultFullHttpResponse response=new DefaultFullHttpResponse(
                     HttpVersion.HTTP_1_1,
                     htt,
                     copiedBuffer(responseMessage.getBytes())
-                );                                           
+                );  
+            response.headers().set(HttpHeaderNames.CONNECTION, "text/plain");
+            response.headers().set(HttpHeaderNames.CONTENT_LENGTH,
+                    responseMessage.length());
+            
+            return response;                                       
             
         }
 		

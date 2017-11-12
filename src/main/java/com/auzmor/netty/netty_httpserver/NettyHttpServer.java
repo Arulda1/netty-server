@@ -2,12 +2,6 @@ package com.auzmor.netty.netty_httpserver;
 
 import static io.netty.buffer.Unpooled.copiedBuffer;
 
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -70,14 +64,14 @@ public class NettyHttpServer
                                     {
                                         final FullHttpRequest request = (FullHttpRequest) msg;
                                         
-                                        
+                                        System.out.println("request entered");
                                         FullHttpResponse response = RequestHandler.response(ctx, msg);
-    
+                                        System.out.println("response enterededed");
                                         if (HttpUtil.isKeepAlive(request))
                                         {
                                             response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
                                         }
-                                        response.headers().set(HttpHeaderNames.CONNECTION, "text/plain");
+                                        
                                         ctx.writeAndFlush(response);
                                     }
                                     else
@@ -107,7 +101,7 @@ public class NettyHttpServer
 
                     })
                     .option(ChannelOption.SO_BACKLOG, 128);
-            channel = bootstrap.bind(8086).sync();
+            channel = bootstrap.bind(8088).sync();
         }
         catch (final InterruptedException e) {
         	
