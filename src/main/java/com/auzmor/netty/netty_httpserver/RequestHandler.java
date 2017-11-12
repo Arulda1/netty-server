@@ -38,7 +38,7 @@ public class RequestHandler {
             	}
             	
             	
-            }if(url.equals("/data/get")){
+            }else if(url.equals("/data/get")){
             	
             	Map<String, String> reqParmGetrFrmUri = reqParmGetrFrmUri(uri);
             	if(reqParmGetrFrmUri!=null && reqParmGetrFrmUri.size()>0){
